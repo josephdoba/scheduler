@@ -17,6 +17,9 @@ storiesOf("Button", module)
   .add("Clickable", () => (
     <Button onClick={action("button-clicked")}>Clickable</Button>
   ))
+  // .add("Clickable", () => (
+  //   <Button onClick={console.log("The button was clicked")}>Clickable</Button>
+  // ))
   .add("Disabled", () => (
     <Button disabled onClick={action("button-clicked")}>
       Disabled
