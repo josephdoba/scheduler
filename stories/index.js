@@ -11,6 +11,15 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 
+//Appointment imports:
+import Appointment from "components/Appointment"
+import Header from "components/Appointment/Header.js"
+import Empty from "components/Appointment/Empty.js"
+import Show from "components/Appointment/Show.js"
+import Confirm from "components/Appointment/Confirm.js"
+import Status from "components/Appointment/Status.js"
+import Error from "components/Appointment/Error.js"
+
 storiesOf("Button", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -21,7 +30,7 @@ storiesOf("Button", module)
   .add("Clickable", () => (
     <Button onClick={action("button-clicked")}>Clickable</Button>
   ))
-  
+
   .add("Disabled", () => (
     <Button disabled onClick={action("button-clicked")}>
       Disabled
@@ -63,13 +72,13 @@ storiesOf("Button", module)
       backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
     })
     .add("Monday", () => (
-      <DayList days={days} day={"Monday"} setDay={action("setDay")} />
+      <DayList days={days} value={"Monday"} onChange={action("setDay")} spots={days[0].spots} />
     ))
     .add("Tuesday", () => (
-      <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
+      <DayList days={days} value={"Tuesday"} onChange={action("setDay")} spots={days[1].spots} />
     ))
     .add("Wednesday", () => (
-        <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
+        <DayList days={days} value={"Wednesday"} onChange={action("setDay")} spots={days[2].spots} />
     ));
 
 const interviewer = {
@@ -120,17 +129,48 @@ storiesOf("InterviewerListItem", module)
     .add("Initial", () => (
       <InterviewerList
         interviewers={interviewers}
+        onChange={() => console.log("Initial Click")}
       />
     ))
     .add("Selected", () => (
       <InterviewerList
         interviewers={interviewers}
-        interviewer={3}
+        value={3}
+        onChange={() => console.log("Selected")}
       />
     ))
     .add("Clickable", () => (
       <InterviewerList
         interviewers={interviewers}
-        setInterviewer={action("setInterviewer")}
+        onChange={action("setInterviewer")}
       />
     ));
+
+  storiesOf("Appointment", module)
+    .addParameters({
+      backgrounds: [{name: "white", value: "#fff", default: true}]
+    })
+    .add("Appointment", () => (
+    <Appointment />
+    ))
+    .add("Appointment with Time", () => (
+    <Appointment time={"12pm"}/>
+    ))
+    .add("Header", () => (
+      <Header time={"12:01pm"}/>
+    ))
+    .add("Empty", () => (
+      <Empty onAdd={action("onAdd")}/>
+    ))
+    .add("Show", () => (
+      <Show student={"Lydia Miller-Jones"} interviewer={interviewers[0].name} onEdit={action("onEdit")} onDelete={action("onDelete")}/>
+    ))
+    .add("Confirm", () => (
+      <Confirm message={"Delete the Appointment?"} onConfirm={action("onConfirm")} onCancel={action("onCancel")}/>
+    ))
+    .add("Status", () => (
+      <Status message={"Deleting appointment..."}/>
+    ))
+    .add("Error", () => (
+      <Error message={"Oops something went wrong..."} onClose={action("onClose")}/>
+    ))

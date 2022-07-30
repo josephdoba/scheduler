@@ -4,33 +4,34 @@ import stylesInterviewerList from "components/InterviewerList.scss";
 
 /*
 react hiearchy:
-      <Application>
-        <components>
+  <Application>
+      <components>
           <InterviewerList>
-            <interviewlistItems>
-            </interviewlistItems>
+              <interviewlistItems>
+              </interviewlistItems>
           </InterviewerList>
           <daylist>
-            <daylistItems>
-            </daylistItems>
+              <daylistItems>
+              </daylistItems>
           </daylist>
-        </components>
-      </Appliication>
+      </components>
+  </Appliication>
 */
 
 export default function InterviewerList (props) {
 
-  const { interviewers, value, setInterviewer } = props
+  console.log(props)
+  const { interviewers, value, onChange } = props
 
-  const renderInterviewers = interviewers.map(person => {
+  const renderInterviewers = interviewers.map(interviewer => {
     return (
       <InterviewerListItem 
-        key={person.id}
-        name={person.name}
-        avatar={person.avatar}
-        selected={person.id === value}
-        setInterviewer={() => setInterviewer(person.id)}
-        />
+        key={interviewer.id}
+        name={interviewer.name}
+        avatar={interviewer.avatar}
+        selected={interviewer.id === value}
+        setInterviewer={() => onChange(interviewer.id)}    
+      />
     )
   })
 

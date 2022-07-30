@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import stylesInterviewerListItem from "components/InterviewerListItem.scss";
 import classNames from 'classnames';
 
