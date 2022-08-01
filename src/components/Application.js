@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 import "components/Application.scss";
 import DayList from "./DayList";
+import Appointment from "./Appointment";
 
+//Mock Data:
 const days = [
   {
     id: 1,
@@ -21,8 +23,74 @@ const days = [
   },
 ];
 
+const appointments = {
+  "1": {
+    id: 1,
+    time: "12pm",
+  },
+  "2": {
+    id: 2,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer:{
+        id: 3,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  },
+  "3": {
+    id: 3,
+    time: "2pm",
+  },
+  "4": {
+    id: 4,
+    time: "3pm",
+    interview: {
+      student: "Archie Andrews",
+      interviewer:{
+        id: 4,
+        name: "Cohana Roy",
+        avatar: "https://i.imgur.com/FK8V841.jpg",
+      }
+    }
+  },
+  "5": {
+    id: 5,
+    time: "4pm",
+  }
+};
+
+const convertAppointmentToArray = Object.values(appointments);
+
+const appointmentItems = convertAppointmentToArray.map((appointment) => {
+  return (
+    <Appointment 
+      key={appointment.id}
+      id={appointment.id} 
+      time={appointment.time} 
+      interview={appointment.interview}
+      />
+  )
+})
+
+/*
+const appointmentItems = appointments.map((appointment) => {
+    return (
+      <Appointment 
+        key={appointment.id}
+        id={appointment.id} 
+        time={appointment.time} 
+        interview={appointment.interview}
+        />
+    )
+  })
+*/
+
 export default function Application(props) {
   const [day, setDay] = useState("Monday"); // Defines the default day that is selected, and to be passed through to other components.
+
   
   return (
     <main className="layout">
@@ -43,7 +111,8 @@ export default function Application(props) {
 />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {appointmentItems}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );

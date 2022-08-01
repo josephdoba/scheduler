@@ -4,26 +4,23 @@ import styleAppointment from 'components/Appointment/styles.scss' //style for ap
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
-import Form from './Form';
 
 export default function Appointment (props) {
-  console.log("--------- All Props: --------- ")
-  console.log(props)
+  // console.log("--------- All Props: --------- ")
+  // console.log(props)
 
   
-  console.log("--- Id: ---")
-  console.log(props.id)
-  console.log("--- Time: ---")
-  console.log(props.time)
-  console.log("--- Interivew object: ---")
-  console.log(props.interview)
-
-
+  // console.log("--- Id: ---")
+  // console.log(props.id)
+  // console.log("--- Time: ---")
+  // console.log(props.time)
+  // console.log("--- Interivew object: ---")
+  // console.log(props.interview)
 
   // i'm stuck because I don't understand why I am unable to pass objects as a reference into the props
   // Do you need to deconstruct the object?? props.interview.interviewer.id format doesnt work.. Cannot read properties of undefined (reading 'interviewer')
 
-  // What were you passing in? - my conditional statement was props.id 
+  // What were you passing in? - my conditional statement was props.id - When we needed to pass props.interview, since that was an actual object instead of an integer within the ternary operator statement.
 
   return (
     <article className={styleAppointment}>
@@ -34,7 +31,6 @@ export default function Appointment (props) {
     </article>
   
   );
-
 };
 
 
@@ -46,6 +42,6 @@ Create a file with our component name [X]
 Create & Export the component function [X]
 Add the base HTML in the return statement of our component [X]
 Create & Import a CSS / SCSS file holding the style of our component [X]
-Write stories for Storybook to render our component in isolation []
-Refactor the hardcoded content to use props & state []
+Write stories for Storybook to render our component in isolation [X]
+Refactor the hardcoded content to use props & state [X]
 */

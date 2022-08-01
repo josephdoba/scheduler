@@ -22,7 +22,7 @@ export default function DayLightItem(props) {
     }
   } 
 
-  return(
+  return (
     <li onClick={() => props.setDay(name)} className={dayClass} selected={selected}>
       <h2 className="text--regular">{name}</h2>
       <h3 className="text--light">{formatSpots()}</h3>
