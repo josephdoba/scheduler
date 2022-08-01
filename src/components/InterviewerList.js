@@ -2,25 +2,7 @@ import React, { useState } from 'react';
 import InterviewerListItem from './InterviewerListItem';
 import stylesInterviewerList from "components/InterviewerList.scss";
 
-/*
-react hiearchy:
-  <Application>
-      <components>
-          <InterviewerList>
-              <interviewlistItems>
-              </interviewlistItems>
-          </InterviewerList>
-          <daylist>
-              <daylistItems>
-              </daylistItems>
-          </daylist>
-      </components>
-  </Appliication>
-*/
-
 export default function InterviewerList (props) {
-
-  console.log(props)
   const { interviewers, value, onChange } = props
 
   const renderInterviewers = interviewers.map(interviewer => {
