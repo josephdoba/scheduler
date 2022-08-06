@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames"
 import stylesDayListItem from "components/DayListItem.scss"
 
-export default function DayLightItem(props) {
+export default function DayListItem(props) {
 
   const { selected, spots, name } = props
 

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 
+import axios from 'axios';
+
 //Mock Data:
+/*
 const days = [
   {
     id: 1,
@@ -22,7 +25,7 @@ const days = [
     spots: 0,
   },
 ];
-
+*/
 const appointments = {
   "1": {
     id: 1,
@@ -89,9 +92,19 @@ const appointmentItems = appointments.map((appointment) => {
 */
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday"); // Defines the default day that is selected, and to be passed through to other components.
+  const [days, setDays] = useState([]); // Defines the default day that is selected, and to be passed through to other components.
 
+  const [day, setDay] = useState(null);
+
+  useEffect(() => {
+    const testDays = "http://localhost:8001/api/days";
+    axios.get(testDays).then(response => {
+      console.log(response)
+      setDays([...response.data])
+    })
+  }, [])
   
+
   return (
     <main className="layout">
       <section className="sidebar">
