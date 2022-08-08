@@ -14,7 +14,7 @@ export default function Appointment (props) {
   // console.log(props.id)
   // console.log("--- Time: ---")
   // console.log(props.time)
-  // console.log("--- Interivew object: ---")
+  // console.log("--- Interview object: ---")
   // console.log(props.interview)
 
   // i'm stuck because I don't understand why I am unable to pass objects as a reference into the props
@@ -26,7 +26,7 @@ export default function Appointment (props) {
     <article className={styleAppointment}>
       <Header time={props.time}/>
       <Fragment>
-        {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer.name}/> : <Empty />}
+        {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}/> : <Empty />}
       </Fragment>
     </article>
   

@@ -1,4 +1,4 @@
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 // countArray= [3, 2]
 const state = {
@@ -69,7 +69,7 @@ test("getAppointmentsForDay returns an empty array when the day is not found", (
   expect(result.length).toEqual(0);
 });
 
-test.only("getInterview returns an object with the interviewer data", () => {
+test("getInterview returns an object with the interviewer data", () => {
   const result = getInterview(state, state.appointments["3"].interview);
   expect(result).toEqual(
     expect.objectContaining({
