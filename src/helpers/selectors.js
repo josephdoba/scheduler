@@ -8,18 +8,44 @@ export function getAppointmentsForDay(state, day) {
       })
     }
   });
-
   return results;
 };
 
-/*
-Carmens code to reference (with her permission):
-export function getAppointmentsForDay(state, day) {
-  let results = [];
-  for (let i of state.days) {
-    if (i.name === day) {
-      i.appointments.forEach(appointment => results.push(state.appointments[appointment]))
+
+export function getInterview(state, interview) {
+  console.log(state)
+  console.log(interview)
+  // console.log(!interview)
+  // console.log(interview.interviewer) // dictates the ID of the interviewer
+  
+  if(!interview) return null;
+
+  let result = {};
+
+  for (const id in state.interviewers) {
+
+    if (state.interviewers[id].id === interview.interviewer) {
+    console.log(`the IDs from ${state.interviewers[id].id} and ${interview.interviewer} match`)
+
+    return {
+      student: interview.student,
+      interviewer: state.interviewer
+      }
     }
   };
-  return results;
+};
+
+/*
+export function getInterview(state, interview) {
+  if (interview === null) return null;
+
+  for (let person in state.interviewers) {
+    if (state.interviewers[person].id === interview.interviewer) {
+      return {
+        student: interview.student,
+        interviewer: state.interviewers[person]
+      }
+    }
+  };
+};
 */
