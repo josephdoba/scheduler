@@ -1,33 +1,42 @@
 import React, { Fragment } from 'react';
-import styleAppointment from 'components/Appointment/styles.scss' //style for appointments
+import styleAppointment from 'components/Appointment/styles.scss'
+import useVisualMode from 'hooks/useVisualMode';
 
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
 
-export default function Appointment (props) {
-  // console.log("--------- All Props: --------- ")
-  // console.log(props)
-
+  // mode consts declaration:
+  const EMPTY = "EMPTY";
+  const SHOW = "SHOW";
+  const CREATE = "CREATE";
+  // const CONFIRM = "CONFIRM";
+  // const SAVING = "SAVING";
+  // const EDIT = "EDIT";
+  // const DELETING = "DELETING";
   
-  // console.log("--- Id: ---")
-  // console.log(props.id)
-  // console.log("--- Time: ---")
-  // console.log(props.time)
-  // console.log("--- Interview object: ---")
-  // console.log(props.interview)
-
-  // i'm stuck because I don't understand why I am unable to pass objects as a reference into the props
-  // Do you need to deconstruct the object?? props.interview.interviewer.id format doesnt work.. Cannot read properties of undefined (reading 'interviewer')
-
-  // What were you passing in? - my conditional statement was props.id - When we needed to pass props.interview, since that was an actual object instead of an integer within the ternary operator statement.
+  export default function Appointment (props) {
+    
+    const { mode, transition, back } = useVisualMode(
+      props.interview ? SHOW : EMPTY
+    );
 
   return (
     <article className={styleAppointment}>
       <Header time={props.time}/>
-      <Fragment>
-        {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}/> : <Empty />}
-      </Fragment>
+      {mode === EMPTY && <Empty onAdd={() => {
+        console.log("onAdd clicked")
+        
+      }} />}
+      {mode === SHOW && (
+      <Show
+      student={props.interview.student}
+      interviewer={props.interview.interviewer}
+      />)}
+      {mode === CREATE && (
+        <the component goes here/>
+      )}
+
     </article>
   
   );
