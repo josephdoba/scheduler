@@ -25,10 +25,6 @@ export default function InterviewerList (props) {
       </ul>
     </section>
   );
-
-  // why did commenting literally this entire function work?
-  // Sorta... it doesnt render an interview list per day now 
-  // return null;
 };
 
 

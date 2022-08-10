@@ -15,10 +15,10 @@ export function getInterviewersForDay(state, day) {
 export function getInterview(state, interview) {  
   if(!interview.interview) return null;
   
-  const interviewerID = interview.interview.interviewer;
+  const interviewerID = interview.interviewer;
   const interviewObj = {
     student: interview.interview.student,
-    interviewer: state.interviewers[interviewerID].name
+    interviewer: state.interviewers[interviewerID]
   }
   
   return interviewObj;

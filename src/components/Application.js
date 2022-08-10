@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-
-import axios from 'axios';
 import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "../helpers/selectors";
 
+
+// ------------ Main application component and set state 
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
@@ -15,13 +16,56 @@ export default function Application(props) {
     interviewers: {}
   });
 
-  // book interview:
-  const bookInterview = (id, interview) => {
+  // ------------  book interview:  ------------ 
+  function bookInterview(id, interview) {
     console.log(id, interview);
+    
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    
+    // put request to api database when save is clicked
+    axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
+    .then(() => {
+      setState({
+        ...state,
+        appointments
+      });
+    })
+    .catch((err) => {console.log(err)})
+  };
+
+  // ------------ Cancel Interview:  ------------ 
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+  
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    .then(() => {
+      setState({
+        ...state,
+        appointments
+      });
+    })
+    .catch((err) => {console.log(err)})
 
   }
+
   
-  // retrieve API data
+  // ------------ retrieve API data ------------
   const apiDays = "http://localhost:8001/api/days";
   const apiAppointments = "http://localhost:8001/api/appointments"
   const apiInterviewers = "http://localhost:8001/api/interviewers"
@@ -42,7 +86,7 @@ export default function Application(props) {
       });
     }, []);
 
- // declare schedules variable:
+ // ------------ map all schedules: ------------
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment);
     
@@ -53,7 +97,8 @@ export default function Application(props) {
       time={appointment.time} 
       interview={interview}
       interviewers={getInterviewersForDay(state, state.day)}
-      bookInterview={bookInterview(1, 5)}
+      bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
       />
     )
   })
