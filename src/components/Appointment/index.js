@@ -5,6 +5,8 @@ import useVisualMode from 'hooks/useVisualMode';
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
+import Form from './Form';
+import { getInterviewersForDay } from 'helpers/selectors';
 
   // mode consts declaration:
   const EMPTY = "EMPTY";
@@ -16,27 +18,40 @@ import Empty from './Empty';
   // const DELETING = "DELETING";
   
   export default function Appointment (props) {
+    console.log(props)
     
     const { mode, transition, back } = useVisualMode(
       props.interview ? SHOW : EMPTY
     );
 
+    const save = (name, interviewer) => {
+      const interview = {
+        student: name,
+        interviewer
+      };
+      console.log(interview)
+      return interview;
+    }
+
   return (
     <article className={styleAppointment}>
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => {
-        console.log("onAdd clicked")
-        
+        transition(CREATE)
       }} />}
+      
       {mode === SHOW && (
       <Show
       student={props.interview.student}
       interviewer={props.interview.interviewer}
       />)}
       {mode === CREATE && (
-        <the component goes here/>
+        <Form
+        interviewers={props.interviewers} 
+        onCancel={() => {transition(EMPTY)}}
+        onSave={() => {save("Carl", "Beef")}}/>
+        // onSave={() => {console.log(save("John", "Smith"))}}/>
       )}
-
     </article>
   
   );

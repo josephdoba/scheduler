@@ -16,7 +16,6 @@ export function getInterview(state, interview) {
   if(!interview.interview) return null;
   
   const interviewerID = interview.interview.interviewer;
-  console.log(interviewerID)
   const interviewObj = {
     student: interview.interview.student,
     interviewer: state.interviewers[interviewerID].name

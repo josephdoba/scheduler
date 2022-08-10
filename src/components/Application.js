@@ -14,6 +14,12 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
+
+  // book interview:
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+
+  }
   
   // retrieve API data
   const apiDays = "http://localhost:8001/api/days";
@@ -46,6 +52,8 @@ export default function Application(props) {
       id={appointment.id} 
       time={appointment.time} 
       interview={interview}
+      interviewers={getInterviewersForDay(state, state.day)}
+      bookInterview={bookInterview(1, 5)}
       />
     )
   })
