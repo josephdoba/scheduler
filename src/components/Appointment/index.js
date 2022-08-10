@@ -9,15 +9,19 @@ import Form from './Form';
 import { getInterviewersForDay } from 'helpers/selectors';
 import Confirm from './Confirm';
 import Status from './Status';
+import Error from './Error';
 
   // mode consts declaration:
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
-  const DELETING = "Deleting...";
-  const CONFIRM = "Are you sure you want to delete this appointment?";
-  const SAVING = "Saving...";
   const EDIT = "EDIT";
+  const CONFIRM = "Are you sure you want to delete this appointment?";
+  const DELETING = "Deleting";
+  const SAVING = "Saving";
+
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
   
   export default function Appointment (props) {
     const { mode, transition, back } = useVisualMode(
@@ -26,40 +30,29 @@ import Status from './Status';
 
     // Save new appointment:
     function save(name, interviewer) {
+      transition(SAVING)
       const interview = {
         student: name,
         interviewer
       };
-
-     
-
-
+    
       props.bookInterview(props.id, interview)
-        transition(SHOW);
- 
+      .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVE, true))
+
+      // can there only be one transition used per function?? probably not, that wouldn't make sense. OH ITS TRUE.. perhaps theres an async issue happening
+
+      // Resolved -  because you wrote .then(transition(SHOW), instead of .then(() => transition(SHOW)
+
     }
-
-    // Edit existing interview:
-
-    // couple ways you can solve this
-
-    // Perhaps we can use an if statement within the book interview function, that checks if the interview already exists and makes a call to the APi to axios.edit instead of axios.put ? 
-
-    // or
-
-    // perhaps its not needed, because its already retrieving the student name and its already posting the update via the save function. Just needs the instructor name from the appointment we're trying to edit
 
     // Delete Interview:
     function deleteInterview() {
       transition(DELETING)
 
       props.cancelInterview(props.id)
-        .then(() => {
-          transition(EMPTY);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then(() => transition(EMPTY))
+        .catch(() => transition(ERROR_DELETE, true));
     }    
 
   return (
@@ -85,7 +78,7 @@ import Status from './Status';
       {mode === CONFIRM && (
         <Confirm
           message={CONFIRM}
-          onCancel={((prev)=> back(prev))}
+          onCancel={back}
           onConfirm={deleteInterview}
         />
       )}
@@ -94,13 +87,17 @@ import Status from './Status';
           student={props.interview.student}
           interviewer={props.interview.interviewer.id}
           interviewers={props.interviewers} 
-          onCancel={(prev) => {back(prev)}}
+          onCancel={back}
           onSave={save}
           />
       )}
 
-      {mode === DELETING && <Status message={DELETING} />}
       {mode === SAVING && <Status message={SAVING} />}
+      {mode === DELETING && <Status message={DELETING} />}
+
+      {mode === ERROR_SAVE && <Error message={"Something went wrong with saving"} onClose={()=>{back()}} />}
+      {mode === ERROR_DELETE && <Error message={"Something went wrong with deleting"}onClose={()=>{back(); back()}} />}
+
     </article>
   
   );
