@@ -24,21 +24,33 @@ import Status from './Status';
       props.interview ? SHOW : EMPTY
     );
 
-
-    // book appointment:
+    // Save new appointment:
     function save(name, interviewer) {
       const interview = {
         student: name,
         interviewer
       };
-      transition(SAVING)
+
+     
+
 
       props.bookInterview(props.id, interview)
-      transition(SHOW);
+        transition(SHOW);
+ 
     }
 
+    // Edit existing interview:
+
+    // couple ways you can solve this
+
+    // Perhaps we can use an if statement within the book interview function, that checks if the interview already exists and makes a call to the APi to axios.edit instead of axios.put ? 
+
+    // or
+
+    // perhaps its not needed, because its already retrieving the student name and its already posting the update via the save function. Just needs the instructor name from the appointment we're trying to edit
+
+    // Delete Interview:
     function deleteInterview() {
-      console.log("deleting log was clicked from index.js")
       transition(DELETING)
 
       props.cancelInterview(props.id)
@@ -61,7 +73,7 @@ import Status from './Status';
       <Show
       student={props.interview.student}
       interviewer={props.interview.interviewer}
-      onEdit={() => {console.log("Edit was clicked")}}
+      onEdit={() => {transition(EDIT)}}
       onDelete={() => transition(CONFIRM)}
       />)}
       {mode === CREATE && (
@@ -77,6 +89,16 @@ import Status from './Status';
           onConfirm={deleteInterview}
         />
       )}
+      {mode === EDIT && (
+        <Form
+          student={props.interview.student}
+          interviewer={props.interview.interviewer.id}
+          interviewers={props.interviewers} 
+          onCancel={(prev) => {back(prev)}}
+          onSave={save}
+          />
+      )}
+
       {mode === DELETING && <Status message={DELETING} />}
       {mode === SAVING && <Status message={SAVING} />}
     </article>

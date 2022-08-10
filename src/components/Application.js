@@ -33,6 +33,7 @@ export default function Application(props) {
     // put request to api database when save is clicked
     axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
     .then(() => {
+      
       setState({
         ...state,
         appointments
@@ -64,7 +65,6 @@ export default function Application(props) {
 
   }
 
-  
   // ------------ retrieve API data ------------
   const apiDays = "http://localhost:8001/api/days";
   const apiAppointments = "http://localhost:8001/api/appointments"
@@ -86,9 +86,10 @@ export default function Application(props) {
       });
     }, []);
 
+
  // ------------ map all schedules: ------------
   const schedule = dailyAppointments.map((appointment) => {
-    const interview = getInterview(state, appointment);
+    const interview = getInterview(state, appointment.interview);
     
     return (
       <Appointment 
