@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import styleAppointment from 'components/Appointment/styles.scss'
+import 'components/Appointment/styles.scss'
 import useVisualMode from 'hooks/useVisualMode';
 
 import Header from './Header';
@@ -56,7 +56,7 @@ import Error from './Error';
     }    
 
   return (
-    <article className={styleAppointment}>
+    <article className="appointment">
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => {
         transition(CREATE)

@@ -3,8 +3,6 @@ import classNames from "classnames"
 import stylesDayListItem from "components/DayListItem.scss"
 
 export default function DayListItem(props) {
-  console.log("from daylistItem")
-  console.log(props)
 
   const { selected, spots, name } = props
 
