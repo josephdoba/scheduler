@@ -21,47 +21,24 @@ export default function useApplicationData() {
   const setDay = (day) => setState({ ...state, day });
 
   // ------------ Update Spots Remaining: ------------
+
   function updateSpots(state, appointments) {
     let spotsResult = 0;
-    const appointmentsPerDayArray = state.days.map((day) => {
+    return state.days.map((day) => {
       if (state.day === day.name) {
         for (let aptId of day.appointments) {
           if (appointments[aptId].interview === null) {
             spotsResult++;
             day.spots = spotsResult;
-            console.log(day.spots)
           }
+        }
+        if(spotsResult === 0){
+          day.spots = 0;
         }
       }
       return day;
     });
-    
-    for(let aptId of appointmentsPerDayArray) {
-      const nullCount = 0;
-      if(appointmentsPerDayArray[aptId].interview === null){
-        nullCount++
-      }
-      return nullCount;
-    }
-    if(nullCount === 5) {
-
-    }
   }
-  // function updateSpots(state, appointments) {
-  //   let spotsResult = 0;
-  //   return state.days.map((day) => {
-  //     if (state.day === day.name) {
-  //       for (let aptId of day.appointments) {
-  //         if (appointments[aptId].interview === null) {
-  //           spotsResult++;
-  //           day.spots = spotsResult;
-  //           console.log(day.spots)
-  //         }
-  //       }
-  //     }
-  //     return day;
-  //   });
-  // }
 
   // ------------  book interview:  ------------
   function bookInterview(id, interview) {
@@ -80,6 +57,7 @@ export default function useApplicationData() {
       appointments,
       days: updateSpots({ ...state }, appointments),
     };
+
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(() => {

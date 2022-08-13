@@ -35,7 +35,6 @@ import Error from './Error';
         student: name,
         interviewer
       };
-    
       props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true))
