@@ -19,7 +19,7 @@ describe("Appointment", () => {
 
 // xit is used to skip tests:
 xit("Does something its suppose to do", () => {
-  // some code
+  //
 });
 
 // . skip also works:

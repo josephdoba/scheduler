@@ -23,18 +23,45 @@ export default function useApplicationData() {
   // ------------ Update Spots Remaining: ------------
   function updateSpots(state, appointments) {
     let spotsResult = 0;
-    return state.days.map((day) => {
+    const appointmentsPerDayArray = state.days.map((day) => {
       if (state.day === day.name) {
         for (let aptId of day.appointments) {
           if (appointments[aptId].interview === null) {
             spotsResult++;
             day.spots = spotsResult;
+            console.log(day.spots)
           }
         }
       }
       return day;
     });
+    
+    for(let aptId of appointmentsPerDayArray) {
+      const nullCount = 0;
+      if(appointmentsPerDayArray[aptId].interview === null){
+        nullCount++
+      }
+      return nullCount;
+    }
+    if(nullCount === 5) {
+
+    }
   }
+  // function updateSpots(state, appointments) {
+  //   let spotsResult = 0;
+  //   return state.days.map((day) => {
+  //     if (state.day === day.name) {
+  //       for (let aptId of day.appointments) {
+  //         if (appointments[aptId].interview === null) {
+  //           spotsResult++;
+  //           day.spots = spotsResult;
+  //           console.log(day.spots)
+  //         }
+  //       }
+  //     }
+  //     return day;
+  //   });
+  // }
 
   // ------------  book interview:  ------------
   function bookInterview(id, interview) {
