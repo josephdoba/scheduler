@@ -90,7 +90,7 @@ export default function useApplicationData() {
   }
 
   // ------------ retrieve API data ------------
-  const apiDays = "api/days";
+  const apiDays = "http://localhost:8001/api/days";
   const apiAppointments = "http://localhost:8001/api/appointments";
   const apiInterviewers = "http://localhost:8001/api/interviewers";
 
@@ -101,6 +101,7 @@ export default function useApplicationData() {
       axios.get(apiInterviewers),
     ])
       .then((all) => {
+        // console.log(all);
         setState((prev) => ({
           ...prev,
           days: all[0].data,

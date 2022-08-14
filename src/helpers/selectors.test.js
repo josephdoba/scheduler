@@ -1,6 +1,5 @@
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
-// countArray= [3, 2]
 const state = {
   days: [
     {

@@ -11,10 +11,10 @@ afterEach(cleanup);
 describe("Application", () => {
 
   // --------- App functionality tests: ---------
-  it("defaults to Monday and changes the schedule when a new day is selected", () => {
-    const { getByText } = render(<Application />);
-  
-    return waitForElement(() => getByText("Monday")).then(() => {
+  it("defaults to Monday and changes the schedule when a new day is selected", async () => {
+    const { getByText, debug } = render(<Application />);
+
+    await waitForElement(() => getByText("Monday")).then(() => {
       fireEvent.click(getByText("Tuesday"));
       expect(getByText("Leopold Silvers")).toBeInTheDocument();
     });
@@ -23,6 +23,7 @@ describe("Application", () => {
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     const { container, debug } = render(<Application />);
+    
     
     await waitForElement(() => getByText(container, "Archie Cohen"));
     
@@ -51,7 +52,7 @@ describe("Application", () => {
 
 
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
-    const { container } = render(<Application />);
+    const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
   
     const appointment = getAllByTestId(container, "appointment").find(
@@ -70,11 +71,12 @@ describe("Application", () => {
       queryByText(day, "Monday")
     );
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+    debug();
   });
 
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
-    const { container } = render(<Application />);
+    const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
   
     const appointment = getAllByTestId(container, "appointment").find(
@@ -94,15 +96,16 @@ describe("Application", () => {
     );
 
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+    debug();
   });
 
 
   // --------- API call tests and Error Handling: ---------
   it("shows the save error when failing to save an appointment", async () => {
-    const { container } = render(<Application />);
+    const { container, debug } = render(<Application />);
     axios.put.mockRejectedValueOnce();
 
-    await waitForElement(() => getByText(container, "Archie Cohen"));
+    await waitForElement(() => queryByText(container, "Archie Cohen"));
     const appointment = getAllByTestId(container, "appointment")[0];
 
     fireEvent.click(getByAltText(appointment, "Add"));
@@ -115,25 +118,30 @@ describe("Application", () => {
     await waitForElement(() => getByText(appointment, "Something went wrong with saving"));
 
     expect(getByText(appointment, "Something went wrong with saving")).toBeInTheDocument();
+    debug();
   });
 
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
-    const { container } = render(<Application />);
-    axios.delete.mockRejectedValueOnce();
+    const { container, debug } = render(<Application />);
+    console.log(prettyDOM(container));
     
-    await waitForElement(() => getByText(container, "Archie Cohen"));
-  
+    axios.delete.mockRejectedValueOnce();
+    const consoleLogTester = queryByText(container, "Archie Cohen");
+    console.log(consoleLogTester, "consoleLogTester")
+    await waitForElement(() => queryByText(container, "Archie Cohen"));
+    
+    
     const appointment = getAllByTestId(container, "appointment").find(
       appointment => queryByText(appointment, "Archie Cohen")
-    );
-  
-    fireEvent.click(queryByAltText(appointment, "Delete"));
-    fireEvent.click(queryByText(appointment, "Confirm"));
+      );
+      
+      fireEvent.click(getByAltText(appointment, "Delete"));
+      fireEvent.click(getByText(appointment, "Confirm"));
   
     await waitForElement(() => getByText(appointment, "Something went wrong with deleting"));
 
     expect(getByText(appointment, "Something went wrong with deleting")).toBeInTheDocument();
-    
+    debug();
   });
 });

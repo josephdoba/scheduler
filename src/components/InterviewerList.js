@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import InterviewerListItem from './InterviewerListItem';
 import stylesInterviewerList from "components/InterviewerList.scss";
 import PropTypes from 'prop-types';
@@ -17,7 +17,7 @@ function InterviewerList (props) {
         setInterviewer={() => onChange(interviewer.id)}    
       />
     )
-  })
+  });
 
   return (
     <section className={stylesInterviewerList}>
@@ -34,16 +34,3 @@ InterviewerList.propTypes = {
 };
 
 export default InterviewerList;
-
-
-/*
-Component creation steps
-To build our new components, we should follow the same steps as before.
-
-Create a file with our component name [X]
-Create & Export the component function [X]
-Add the base HTML in the return statement of our component [X]
-Create & Import a CSS / SCSS file holding the style of our component [X]
-Write stories for Storybook to render our component in isolation [X]
-Refactor the hardcoded content to use props & state [X]
-*/

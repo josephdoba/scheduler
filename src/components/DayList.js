@@ -22,4 +22,4 @@ export default function DayList(props) {
       {dayItems}
     </ul>
   );
-}
+};
