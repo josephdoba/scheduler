@@ -8,5 +8,5 @@ it("should navigate to Tuesday", () => {
   cy.visit("http://localhost:8000/");
   cy.contains("li", "Tuesday")
   .click()
-  .should("have.css", "background-color", "rgba(242, 242, 242)");
+  .should("have.css", "background-color", "rgb(242, 242, 242)");
 });
