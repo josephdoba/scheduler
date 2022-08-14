@@ -90,7 +90,7 @@ export default function useApplicationData() {
   }
 
   // ------------ retrieve API data ------------
-  const apiDays = "http://localhost:8001/api/days";
+  const apiDays = "api/days";
   const apiAppointments = "http://localhost:8001/api/appointments";
   const apiInterviewers = "http://localhost:8001/api/interviewers";
 
