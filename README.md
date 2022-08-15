@@ -4,7 +4,7 @@ This is an Interview Scheduler project built with React during my time at Lighth
 
 ## Demo:
 
-![](https://github.com/josephdoba/scheduler/blob/main/docs/interview_scheduler-demo.gif)
+![](https://github.com/josephdoba/scheduler/blob/master/docs/interview_scheduler-demo.gif)
 
 
 ## Setup
